@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+        color: white;
+    }
+
+    /* 🌈 Animated Gradient Background */
+    body {
+        background: linear-gradient(-45deg, #8e2de2, #ff6f61, #4facfe, #43e97b);
+        background-size: 400% 400%;
+        animation: gradientMove 12s ease infinite;
+    }
+
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* 📱 Swipe Container */
+    .container {
+        display: flex;
+        width: 300vw;
+        height: 100vh;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+    }
+
+    .page {
+        flex: 0 0 100vw;
+        height: 100vh;
+        scroll-snap-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: clamp(2rem, 6vw, 3rem);
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: clamp(1.1rem, 4vw, 1.5rem);
+    }
+
+    button {
+        margin-top: 25px;
+        padding: 15px 25px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 10px;
+        background: #ff6f61;
+        color: white;
+        cursor: pointer;
+        width: 80%;
+        max-width: 300px;
+    }
+
+    button:active {
+        transform: scale(0.97);
+    }
+
+    /* Floating GIF */
+    .floating-img {
+        position: absolute;
+        bottom: -100px;
+        width: 60px;
+        animation: floatUp 8s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Hide scrollbar */
+    .container::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🎉 PAGE 1 -->
+    <div class="page">
+        <h1>🎉 Happy Birthday! 🎂</h1>
+        <p>You've been doing a great job these 20 years, keep it up!</p>
+        <p>And you are still very youthful!</p>
+        <button onclick="launchImages()">Celebrate 🎊</button>
+    </div>
+
+    <!-- 💖 PAGE 2 -->
+    <div class="page">
+        <h1>💖 Compliment Generator</h1>
+        <p id="complimentText">Press the button for a compliment!</p>
+        <button onclick="generateCompliment()">Give Me One 😌</button>
+    </div>
+
+    <!-- ⏳ PAGE 3 -->
+    <div class="page">
+        <h1>⏳ You Are...</h1>
+        <p id="ageDays"></p>
+        <p id="ageHours"></p>
+    </div>
+
+</div>
+
+<script>
+/* 🎊 Floating GIF */
+function launchImages() {
+    for (let i = 0; i < 15; i++) {
+        let img = document.createElement('img');
+        img.src = "media/lv_0_202603021855521-ezgif.com-gif-maker.gif";
+        img.className = "floating-img";
+        img.style.left = Math.random() * 100 + "vw";
+        img.style.animationDuration = (5 + Math.random() * 5) + "s";
+        document.body.appendChild(img);
+
+        setTimeout(() => img.remove(), 10000);
+    }
+}
+
+/* 💖 Compliment Generator */
+const compliments = [
+    "You're doing such a great job!",
+    "You deserve a gold star ⭐",
+    "Woahh your hair is so pretty ",
+    "Mommy? sorry... Mommy? sorry... Mommy? sorry... ",
+    "Hell yeah I saw that thigh gap!",
+    "BOO! Did I scare ya?",
+    "I still wanna try one of those cakes!!"
+];
+
+function generateCompliment() {
+    const random = compliments[Math.floor(Math.random() * compliments.length)];
+    document.getElementById("complimentText").textContent = random;
+}
+
+/* ⏳ Reverse Age Counter */
+const birthDate = new Date("2006-03-02"); // CHANGE THIS
+
+function updateAge() {
+    const now = new Date();
+    const diff = now - birthDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+
+    document.getElementById("ageDays").textContent = days + " days old";
+    document.getElementById("ageHours").textContent = hours + " hours old";
+}
+
+updateAge();
+setInterval(updateAge, 60000); // update every minute
+</script>
+
+</body>
+</html>
